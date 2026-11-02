@@ -19,4 +19,10 @@ run_test: test_protocol
 	./test_protocol
 
 clean:
-	rm -f demo_tone test_protocol
+	rm -f demo_tone test_protocol test_encoder
+
+test_encoder: src/protocol.c src/encoder.c tests/test_encoder.c
+	cc $(CFLAGS) src/protocol.c src/encoder.c tests/test_encoder.c -o test_encoder $(LDFLAGS)
+
+run_test_encoder: test_encoder
+	./test_encoder

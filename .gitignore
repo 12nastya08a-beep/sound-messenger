@@ -54,4 +54,4 @@ dkms.conf
 # debug information files
 *.dwo
 
-demo_tone
+demo_tonetest_encoder
