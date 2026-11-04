@@ -55,4 +55,5 @@ dkms.conf
 *.dwo
 
 demo_tone
+test_encoder
 *.wav
