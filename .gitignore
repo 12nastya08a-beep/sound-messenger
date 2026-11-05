@@ -57,3 +57,4 @@ dkms.conf
 demo_tone
 test_encoder
 *.wav
+test_decoder_assemble
