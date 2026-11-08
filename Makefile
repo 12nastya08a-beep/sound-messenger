@@ -19,10 +19,16 @@ run_test: test_protocol
 	./test_protocol
 
 clean:
-	rm -f demo_tone test_protocol test_encoder
+	rm -f demo_tone test_protocol test_encoder test_decoder_assemble
 
 test_encoder: src/protocol.c src/encoder.c tests/test_encoder.c
 	cc $(CFLAGS) src/protocol.c src/encoder.c tests/test_encoder.c -o test_encoder $(LDFLAGS)
 
 run_test_encoder: test_encoder
 	./test_encoder
+
+test_decoder_assemble: src/protocol.c src/decoder_assemble.c tests/test_decoder_assemble.c
+	cc $(CFLAGS) src/protocol.c src/decoder_assemble.c tests/test_decoder_assemble.c -o test_decoder_assemble $(LDFLAGS)
+
+run_test_decoder_assemble: test_decoder_assemble
+	./test_decoder_assemble
