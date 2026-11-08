@@ -5,20 +5,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        printf("Usage: receive <file.wav>\n");
+        printf("Usage:\n");
+        printf("  receive <file.wav>    decode from a wav file\n");
+        printf("  receive --live        listen on the microphone (live)\n");
         return 1;
     }
 
-    const char *filename = argv[1];
+    int live_mode = 0;
+    const char *filename = NULL;
 
+    if (strcmp(argv[1], "--live") == 0) {
+        live_mode = 1;
+    } else {
+        filename = argv[1];
+    }
+
+    float *samples = NULL;
     size_t sample_count = 0;
-    float *samples = wav_read(filename, &sample_count);
-    if (samples == NULL) {
-        printf("ERROR: could not read %s\n", filename);
-        return 1;
+
+    if (live_mode) {
+        printf("Live mode is not ready yet (listen function not connected).\n");
+        /* TODO: samples = audio_listen(&sample_count); */
+        return 0;
+    } else {
+        samples = wav_read(filename, &sample_count);
+        if (samples == NULL) {
+            printf("ERROR: could not read %s\n", filename);
+            return 1;
+        }
     }
 
     size_t samples_per_bit = (size_t)(SAMPLE_RATE * BIT_DURATION);
