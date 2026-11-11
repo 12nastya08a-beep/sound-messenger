@@ -70,11 +70,19 @@ int main(int argc, char *argv[]) {
 
     printf("Decoded message: %s\n", message);
 
-    FILE *out = fopen("received.txt", "w");
+        FILE *out = fopen("received.txt", "w");
     if (out != NULL) {
         fprintf(out, "%s\n", message);
         fclose(out);
         printf("(saved to received.txt)\n");
+
+#ifdef _WIN32
+        system("start received.txt");
+#elif __APPLE__
+        system("open received.txt");
+#else
+        system("xdg-open received.txt");
+#endif
     }
     
     free(message);
