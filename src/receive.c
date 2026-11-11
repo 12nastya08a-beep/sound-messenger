@@ -69,6 +69,14 @@ int main(int argc, char *argv[]) {
     }
 
     printf("Decoded message: %s\n", message);
+
+    FILE *out = fopen("received.txt", "w");
+    if (out != NULL) {
+        fprintf(out, "%s\n", message);
+        fclose(out);
+        printf("(saved to received.txt)\n");
+    }
+    
     free(message);
     return 0;
 }
