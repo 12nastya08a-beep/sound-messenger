@@ -24,11 +24,18 @@ test_decoder_fft: third_party/kiss_fft.c src/decoder_fft.c tests/test_decoder_ff
 test_decoder_assemble: src/protocol.c src/decoder_assemble.c tests/test_decoder_assemble.c
 	cc $(CFLAGS) src/protocol.c src/decoder_assemble.c tests/test_decoder_assemble.c -o test_decoder_assemble $(LDFLAGS)
 
-run_test: test_protocol test_encoder test_decoder_fft test_decoder_assemble
+test_play: src/audio_play.c tests/test_play.c
+	cc $(CFLAGS) src/audio_play.c tests/test_play.c -o test_play $(LDFLAGS)
+
+run_test: test_protocol test_encoder test_decoder_fft test_decoder_assemble test_play
 	./test_protocol
 	./test_encoder
 	./test_decoder_fft
 	./test_decoder_assemble
+	./test_play
 
 clean:
-	rm -f demo_tone test_protocol test_encoder test_decoder_fft test_decoder_assemble
+	rm -f demo_tone demo_loopback test_protocol test_encoder test_decoder_fft test_decoder_assemble test_play
+
+demo_loopback: demo/demo_loopback.c src/audio_listen.c src/encoder.c src/protocol.c src/decoder_fft.c src/decoder_assemble.c third_party/kiss_fft.c
+	cc $(CFLAGS) demo/demo_loopback.c src/audio_listen.c src/encoder.c src/protocol.c src/decoder_fft.c src/decoder_assemble.c third_party/kiss_fft.c -o demo_loopback $(LDFLAGS)
