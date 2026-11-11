@@ -31,4 +31,6 @@ run_test: test_protocol test_encoder test_decoder_fft test_decoder_assemble
 	./test_decoder_assemble
 
 clean:
-	rm -f demo_tone test_protocol test_encoder test_decoder_fft test_decoder_assemble
+	rm -f demo_tone demo_loopback test_protocol test_encoder test_decoder_fft test_decoder_assemble
+demo_loopback: demo/demo_loopback.c src/audio_listen.c src/encoder.c src/protocol.c src/decoder_fft.c src/decoder_assemble.c third_party/kiss_fft.c
+	cc $(CFLAGS) demo/demo_loopback.c src/audio_listen.c src/encoder.c src/protocol.c src/decoder_fft.c src/decoder_assemble.c third_party/kiss_fft.c -o demo_loopback $(LDFLAGS)
