@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio.h"
 #include "audio_play.h"
 #include "protocol.h"
+#include <time.h>
 
 typedef struct {
     const float *samples;
@@ -53,7 +53,8 @@ void play_audio(const float *samples, size_t num_samples) {
     }
 
     while (ctx.current_index < ctx.num_samples) {
-        ma_sleep(10);
+        struct timespec ts = {0, 10 * 1000000L};
+        nanosleep(&ts, NULL);
     }
 
     ma_device_uninit(&device);

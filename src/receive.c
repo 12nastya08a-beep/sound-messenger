@@ -2,6 +2,7 @@
 #include "../include/decoder_fft.h"
 #include "../include/decoder_assemble.h"
 #include "../include/protocol.h"
+#include "../include/audio_listen.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -28,9 +29,12 @@ int main(int argc, char *argv[]) {
     size_t sample_count = 0;
 
     if (live_mode) {
-        printf("Live mode is not ready yet (listen function not connected).\n");
-        /* TODO: samples = audio_listen(&sample_count); */
-        return 0;
+        printf("Listening on the microphone...\n");
+        samples = listen_for_message(10.0, &sample_count);
+        if (samples == NULL) {
+            printf("ERROR: no message detected (no beacon heard)\n");
+            return 1;
+        }
     } else {
         samples = wav_read(filename, &sample_count);
         if (samples == NULL) {

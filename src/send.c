@@ -1,5 +1,6 @@
 #include "../include/encoder.h"
 #include "../include/wav.h"
+#include "../include/audio_play.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,9 +35,10 @@ int main(int argc, char *argv[]) {
     }
 
     if (live_mode) {
-        printf("Live mode is not ready yet (play function not connected).\n");
-        // TODO: play through speaker, e.g. audio_play(samples, sample_count);
+        printf("Playing \"%s\" through speaker...\n", message);
+        play_audio(samples, sample_count);
         free(samples);
+        printf("Done.\n");
         return 0;
     } else {
         int result = wav_write("message.wav", samples, sample_count);
